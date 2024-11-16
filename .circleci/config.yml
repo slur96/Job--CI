@@ -36,6 +36,12 @@ jobs:
      - run: 
         name: Build Docker Image
         command: docker build -t $DOCKERHUB_USR/circle-ci:v1.0.0 .
+     - run:
+        name: Trivy Scan
+        command: |
+         docker pull aquasec/trivy:latest
+         docker run --rm -v /var/run/docker.sock aquasec/trivy:latest --severity HIGH,CRITICAL image $DOCKERHUB_USR/circle-ci:v1.0.0
+
      - run: 
         name: Checking images locally
         command: docker images
