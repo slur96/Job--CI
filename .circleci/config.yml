@@ -15,7 +15,7 @@ jobs:
     steps:
       - checkout
       - run: 
-          name: Install SonarScanner
+          name: Install & Run SonarScanner Analysis
           command: |
             export SONAR_SCANNER_VERSION=6.2.1.4610
             export SONAR_SCANNER_HOME=$HOME/.sonar/sonar-scanner-$SONAR_SCANNER_VERSION-linux-x64
@@ -24,7 +24,8 @@ jobs:
             export PATH=$SONAR_SCANNER_HOME/bin:$PATH
             export SONAR_SCANNER_OPTS="-server"
             ls $SONAR_SCANNER_HOME/bin #Check if sonar-scanner binary is present here
-
+            sonar-scanner -Dsonar.organization=gitlab-proj -Dsonar.projectKey=job-Ic -Dsonar.sources=. -Dsonar.host.url=https://sonarcloud.io
+            -Dsonar.login=$SONAR_TOKEN
 
 workflows:
   version: 2
