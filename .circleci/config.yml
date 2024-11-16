@@ -45,8 +45,8 @@ jobs:
      - run: 
         name: Push Docker Image
         command: |
-        echo $DOCKER_PAT | docker login -u $DOCKERHUB_USR --password-stdin
-        docker push $DOCKERHUB_USR/circle-ci:v1.0.0
+           echo $DOCKER_PAT | docker login -u $DOCKERHUB_USR --password-stdin
+           docker push $DOCKERHUB_USR/circle-ci:v1.0.0
 
 
 workflows:
