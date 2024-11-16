@@ -25,7 +25,8 @@ jobs:
             export SONAR_SCANNER_OPTS="-server"
             ls $SONAR_SCANNER_HOME/bin #Check if sonar-scanner binary is present here
             sonar-scanner -Dsonar.organization=gitlab-proj -Dsonar.projectKey=job-Ic -Dsonar.sources=. -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN
-  build_docker_image: 
+
+  build_and_push_docker_image: 
    docker:
      - image: docker:20.10.7
    steps:
@@ -35,18 +36,14 @@ jobs:
      - run: 
         name: Build Docker Image
         command: docker build -t $DOCKERHUB_USR/circle-ci:v1.0.0 .
-  push_docker_image:
-   docker:
-     - image: docker:20.10.7
-   steps:
-     - setup_remote_docker:
-         docker_layer_caching: false
-     - checkout
+     - run: 
+        name: Checking images locally
+        command: docker images
      - run: 
         name: Push Docker Image
         command: |
            echo $DOCKER_PAT | docker login -u $DOCKERHUB_USR --password-stdin
-           docker push $DOCKERHUB_USR/circle-ci:latest
+           docker push $DOCKERHUB_USR/circle-ci:v1.0.0 
 
 
 workflows:
@@ -57,8 +54,6 @@ workflows:
       - sonarcloud_analysis: 
           requires:
             - install_dependencies 
-      - build_docker_image
-      - push_docker_image:
-          requires:
-            - build_docker_image
+      - build_and_push_docker_image
+
       
