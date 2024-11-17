@@ -100,8 +100,6 @@ workflows:
           requires:
             - install_dependencies 
       - build_scan_and_push_docker_image
-      - deploy_to_eks_cluster:
-          requires:
-            - build_scan_and_push_docker_image
+      - deploy_to_eks_cluster
 
       
