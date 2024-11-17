@@ -53,7 +53,7 @@ jobs:
   
   deploy_to_eks_cluster:
     docker: 
-      - image: cimg/python:3:10.2
+      - image: cimg/python:3.10.2
     steps:
       - setup_remote_docker:
            docker_layer_caching: true
