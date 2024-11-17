@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: actions-app
-        image: 358966077154.dkr.ecr.us-east-1.amazonaws.com/actions-cicd:latest
+        image: samuel78996/circle-ci:v1.0.0
         ports:
         - containerPort: 3000
 
