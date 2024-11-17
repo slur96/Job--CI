@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: actions-app
-        image: samuel78996/circle-ci:v1.0.0
+        image: samuel78996/circle-ci:v1.0.1
         ports:
         - containerPort: 3000
 
