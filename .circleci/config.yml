@@ -35,13 +35,13 @@ jobs:
      - checkout
      - run: 
         name: Build Docker Image
-        command: docker build -t $DOCKERHUB_USR/circle-ci:v1.0.0 .
+        command: docker build -t $DOCKERHUB_USR/circle-ci:v1.0.1 .
      - run:
         name: Trivy Scan
         command: |
          docker pull aquasec/trivy:latest
          sleep 60
-         docker run --rm -v /var/run/docker.sock aquasec/trivy:latest --severity HIGH,CRITICAL image $DOCKERHUB_USR/circle-ci:v1.0.0
+         docker run --rm -v /var/run/docker.sock aquasec/trivy:latest --severity HIGH,CRITICAL image $DOCKERHUB_USR/circle-ci:v1.0.1
 
      - run: 
         name: Checking images locally
@@ -100,6 +100,8 @@ workflows:
           requires:
             - install_dependencies 
       - build_scan_and_push_docker_image
-      - deploy_to_eks_cluster
+      - deploy_to_eks_cluster:
+          requires:
+            - build_scan_and_push_docker_image
 
       
